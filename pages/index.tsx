@@ -7,7 +7,28 @@ import remarkHint from "remark-hint";
 import remarkToc from "remark-toc";
 import remarkRehype from "remark-rehype";
 
-const components = { CH }
+const components = {
+    CH,
+    h1: (props: any) => {
+        return (<h1 id={slugId(props.children)}>{props.children}</h1>)
+    },
+    h2: (props: any) => {
+        return (<h2 id={slugId(props.children)}>{props.children}</h2>)
+    },
+    h3: (props: any) => {
+        return (<h3 id={slugId(props.children)}>{props.children}</h3>)
+    },
+    h4: (props: any) => {
+        return (<h4 id={slugId(props.children)}>{props.children}</h4>)
+    },
+    h5: (props: any) => {
+        return (<h5 id={slugId(props.children)}>{props.children}</h5>)
+    },
+}
+
+const slugId = (title: string) => {
+    return title.toLowerCase().replaceAll(".", "").split(" ").join("-")
+}
 
 export default function TestPage({ source }: any) {
     return (
@@ -23,9 +44,9 @@ export async function getStaticProps() {
     const source = '' +
         '# Hello world \n' +
         '__Xin chao cac ban__ \n' +
-        '## Table of Contents \n' +
+        '## Danh mục \n' +
 
-        '## Hello 1 \n' +
+        '## Hello 1  \n' +
         '__Xin chao cac ban__ \n' +
         '## Hello 2 \n' +
         '### Hello 2.1 \n' +
@@ -71,7 +92,7 @@ export async function getStaticProps() {
             remarkPlugins: [
                 [remarkCodeHike, {autoImport: false, theme}],
                 [remarkHint],
-                [remarkToc, {maxDepth: 3, ordered: true}],
+                [remarkToc, {heading: 'Danh mục',  ordered: true}],
                 [remarkRehype]
             ],
             useDynamicImport: true,
